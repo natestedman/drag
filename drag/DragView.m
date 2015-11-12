@@ -45,14 +45,6 @@ static inline CGSize FitSizeToSize(CGSize size, CGSize fitToSize)
     }
 }
 
--(void)keyUp:(NSEvent *)event
-{
-    if (event.keyCode == 27)
-    {
-        exit(EXIT_SUCCESS);
-    }
-}
-
 -(BOOL)isFlipped
 {
     return YES;

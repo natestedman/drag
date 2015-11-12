@@ -1,7 +1,7 @@
 INSTALL_DIRECTORY=/usr/local/bin
 TEMPORARY_DIRECTORY?=/tmp/drag-build.dst
 
-XCODE_COMMAND?=xcodebuild
+XCODE_COMMAND=$(shell { command -v xctool || command -v xcodebuild; } 2>/dev/null)
 XCODE_FLAGS=-project 'drag.xcodeproj' -scheme 'drag' -configuration 'Release' DSTROOT=$(TEMPORARY_DIRECTORY)
 
 PACKAGE_NAME=drag.pkg

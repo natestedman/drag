@@ -144,14 +144,6 @@ static CGFloat const WindowHeight = 100;
     exit(EXIT_SUCCESS);
 }
 
--(void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
-{
-}
-
--(void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
-{
-}
-
 -(NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
 {
     switch (context)

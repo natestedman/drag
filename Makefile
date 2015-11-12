@@ -12,7 +12,7 @@ VERSION=0.1
 .PHONY: all clean install package uninstall
 
 all:
-	$(XCODE_COMMAND) $(XCODEFLAGS) build
+	$(XCODE_COMMAND) $(XCODE_FLAGS) build
 
 clean:
 	rm -f "$(COMPONENTS_PLIST_NAME)"

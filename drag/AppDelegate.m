@@ -139,6 +139,7 @@ static CGFloat const WindowHeight = 100;
     };
 }
 
+#pragma mark - Dragging Source
 -(void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
     exit(EXIT_SUCCESS);

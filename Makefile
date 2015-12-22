@@ -38,6 +38,8 @@ package: clean
 		--root "$(TEMPORARY_DIRECTORY)" \
 		--version "$(VERSION)" \
 		"$(PACKAGE_NAME)"
+	
+	codesign -s "Developer ID" "$(PACKAGE_NAME)"
 
 uninstall:
 	rm -f "$(INSTALL_DIRECTORY)/drag"

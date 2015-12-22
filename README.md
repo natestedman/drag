@@ -17,4 +17,4 @@ This creates a window with a drag source for the files passed as arguments, cent
 The program will exit and the window will disappear when dragging completes, or if the escape key is pressed.
 
 ## Building a Package
-A `.pkg` installer can be built with `make package`.
+A `.pkg` installer can be built with `make package`. This requires that a Developer ID is installed.

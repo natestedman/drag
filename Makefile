@@ -37,9 +37,14 @@ package: clean
 		--install-location "/" \
 		--root "$(TEMPORARY_DIRECTORY)" \
 		--version "$(VERSION)" \
+		"temp.pkg"
+	
+	productsign \
+		--sign "Developer ID Installer" \
+		"temp.pkg" \
 		"$(PACKAGE_NAME)"
 	
-	codesign -s "Developer ID" "$(PACKAGE_NAME)"
+	rm "temp.pkg"
 
 uninstall:
 	rm -f "$(INSTALL_DIRECTORY)/drag"

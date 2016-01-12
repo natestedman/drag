@@ -4,6 +4,8 @@
 
 A command-line utility for OS X drag-and-drop.
 
+![Preview Video](https://zippy.gfycat.com/SkeletalGoldenFlyinglemur.gif)
+
 ## Installation
 Download `drag.pkg` from [Releases](https://github.com/natestedman/drag/releases).
 

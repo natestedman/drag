@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "DragView.h"
 
-static NSImage *MaskImage(NSScreen *screen, CGSize size, CGFloat cornerRadius)
+static NSImage *MaskImage(NSScreen *screen, CGSize size, CGFloat cornerRadius, CGFloat white)
 {
     CGFloat scale = screen.backingScaleFactor;
     
@@ -32,7 +32,7 @@ static NSImage *MaskImage(NSScreen *screen, CGSize size, CGFloat cornerRadius)
     NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithBitmapImageRep:rep];
     [NSGraphicsContext setCurrentContext:context];
     
-    [[NSColor blackColor] set];
+    [[NSColor colorWithWhite:white alpha:1.0] set];
     [[NSBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, size.width * scale, size.height * scale)
                                      xRadius:cornerRadius
                                      yRadius:cornerRadius] fill];
@@ -97,16 +97,15 @@ static CGFloat const WindowHeight = 100;
     CGRect viewFrame = { .origin = CGPointZero, .size = windowSize };
     
     // create visual effect view as the root container
-    NSVisualEffectView *effectView = [[NSVisualEffectView alloc] initWithFrame:viewFrame];
-    effectView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
-    effectView.material = NSVisualEffectMaterialDark;
-    effectView.maskImage = MaskImage(ScreenForPoint(mouseLocation), windowSize, 10);
-    _window.contentView = effectView;
+    NSImageView *view = [[NSImageView alloc] initWithFrame:viewFrame];
+    NSScreen *screen = ScreenForPoint(mouseLocation);
+    view.image = MaskImage(screen, windowSize, 10, 0.2);
+    _window.contentView = view;
     
     // add drag view
     _dragView = [[DragView alloc] initWithFrame:viewFrame];
     _dragView.fileURLs = _fileURLs;
-    [effectView addSubview:_dragView];
+    [view addSubview:_dragView];
     
     [_window makeKeyAndOrderFront:nil];
     
@@ -114,6 +113,8 @@ static CGFloat const WindowHeight = 100;
     __weak typeof(self) weakSelf = self;
     
     _dragView.startDrag = ^(NSEvent *event) {
+        view.image = MaskImage(screen, windowSize, 10, 0.05);
+
         NSMutableArray *items = [NSMutableArray arrayWithCapacity:weakSelf.fileURLs.count];
         
         for (NSURL *URL in weakSelf.fileURLs)

@@ -1,11 +1,13 @@
 INSTALL_DIRECTORY=/usr/local/bin
 TEMPORARY_DIRECTORY?=/tmp/drag-build.dst
+TEMPORARY_PACKAGE_DIRECTORY?=/tmp/drag-package.dst
 
 XCODE_COMMAND=$(shell { command -v xctool || command -v xcodebuild; } 2>/dev/null)
 XCODE_FLAGS=-project 'drag.xcodeproj' -scheme 'drag' -configuration 'Release' DSTROOT=$(TEMPORARY_DIRECTORY)
 
 PACKAGE_NAME=drag.pkg
-COMPONENTS_PLIST_NAME=Components.plist
+TEMPORARY_PACKAGE_NAME=$(TEMPORARY_PACKAGE_DIRECTORY)/temp.pkg
+COMPONENTS_PLIST_NAME=$(TEMPORARY_PACKAGE_DIRECTORY)/Components.plist
 
 VERSION=0.1
 
@@ -26,6 +28,8 @@ install: package
 package: clean
 	$(XCODE_COMMAND) $(XCODE_FLAGS) install
 	
+	mkdir -p "$(TEMPORARY_PACKAGE_DIRECTORY)"
+	
 	pkgbuild \
 		--analyze \
 		--root "$(TEMPORARY_DIRECTORY)" \
@@ -37,14 +41,14 @@ package: clean
 		--install-location "/" \
 		--root "$(TEMPORARY_DIRECTORY)" \
 		--version "$(VERSION)" \
-		"temp.pkg"
+		"$(TEMPORARY_PACKAGE_NAME)"
 	
 	productsign \
 		--sign "Developer ID Installer" \
-		"temp.pkg" \
+		"$(TEMPORARY_PACKAGE_NAME)" \
 		"$(PACKAGE_NAME)"
 	
-	rm "temp.pkg"
+	rm "$(TEMPORARY_PACKAGE_NAME)"
 	rm "$(COMPONENTS_PLIST_NAME)"
 
 uninstall:

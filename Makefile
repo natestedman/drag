@@ -45,6 +45,7 @@ package: clean
 		"$(PACKAGE_NAME)"
 	
 	rm "temp.pkg"
+	rm "$(COMPONENTS_PLIST_NAME)"
 
 uninstall:
 	rm -f "$(INSTALL_DIRECTORY)/drag"
